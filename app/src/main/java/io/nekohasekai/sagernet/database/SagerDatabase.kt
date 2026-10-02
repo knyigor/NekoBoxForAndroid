@@ -13,6 +13,8 @@ import io.nekohasekai.sagernet.fmt.gson.GsonConverters
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
+import com.qq.lib.EncryptUtil
 
 @Database(
     entities = [ProxyGroup::class, ProxyEntity::class, RuleEntity::class],
@@ -33,7 +35,7 @@ abstract class SagerDatabase : RoomDatabase() {
         val instance by lazy {
             SagerNet.application.getDatabasePath(Key.DB_PROFILE).parentFile?.mkdirs()
             Room.databaseBuilder(SagerNet.application, SagerDatabase::class.java, Key.DB_PROFILE)
-//                .addMigrations(*SagerDatabase_Migrations.build())
+                .openHelperFactory(SupportOpenHelperFactory(EncryptUtil.key()))
                 .setJournalMode(JournalMode.TRUNCATE)
                 .allowMainThreadQueries()
                 .enableMultiInstanceInvalidation()
