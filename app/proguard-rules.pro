@@ -3,7 +3,7 @@
 
 -keep class io.nekohasekai.sagernet.** { *;}
 -keep class moe.matsuri.nb4a.** { *;}
-
+-keep class net.zetetic.database.sqlcipher.** { *; }
 # Clean Kotlin
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
     static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
