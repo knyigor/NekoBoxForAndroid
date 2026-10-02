@@ -8,6 +8,8 @@ import io.nekohasekai.sagernet.Key
 import io.nekohasekai.sagernet.SagerNet
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
+import com.qq.lib.EncryptUtil
 
 @Database(entities = [KeyValuePair::class], version = 1)
 @GenerateRoomMigrations
@@ -16,6 +18,7 @@ abstract class PublicDatabase : RoomDatabase() {
         val instance by lazy {
             SagerNet.application.getDatabasePath(Key.DB_PROFILE).parentFile?.mkdirs()
             Room.databaseBuilder(SagerNet.application, PublicDatabase::class.java, Key.DB_PUBLIC)
+                .openHelperFactory(SupportOpenHelperFactory(EncryptUtil.key()))
                 .setJournalMode(JournalMode.TRUNCATE)
                 .allowMainThreadQueries()
                 .enableMultiInstanceInvalidation()
