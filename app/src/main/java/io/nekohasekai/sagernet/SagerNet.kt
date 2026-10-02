@@ -53,7 +53,7 @@ class SagerNet : Application(),
 
     override fun onCreate() {
         super.onCreate()
-
+        System.loadLibrary("sqlcipher")
         Thread.setDefaultUncaughtExceptionHandler(CrashHandler)
 
         if (isMainProcess || isBgProcess) {
